@@ -1,9 +1,14 @@
+# seed.py
+# 初期データを投入するスクリプト
+# flaskrパッケージのcreate_app関数とdbオブジェクトをインポート
 from flaskr import create_app, db
+# models.pyのBlogクラスをインポート
 from flaskr.models import Blog
 
 app = create_app()
 
 with app.app_context():
+    # 既存データを削除したい場合はコメントアウトを外す
     # db.drop_all()
     # db.create_all()
 

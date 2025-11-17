@@ -7,12 +7,24 @@
     <header>
       <h1>ミニブログを作ってみよう</h1>
     </header>
+    <p><a href="{{ url_for('blogs.create') }}">新規投稿</a></p>
   <div>
     <ul>
       {% for blog in blogs %} <!-- ループさせてそれぞれ要素を取り出す -->
         <li>タイトル: {{ blog.title }}, 本文: {{ blog.body }}, 投稿者: {{ blog.user_name }}, 投稿日時: {{ blog.created_at }}</li>
-     {% endfor %}
+    　{% endfor %}
     </ul>
   </div>
 </body>
 </html>
+from flask import Blueprint, render_template
+
+bp = Blueprint('blogs', __name__, url_prefix='/blogs')
+
+@bp.route('/')
+def blogs():
+    return render_template('blogs/index.html', blogs=[])
+
+@bp.route('/create')
+def create():
+    return "新規投稿ページです"

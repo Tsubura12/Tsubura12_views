@@ -1,16 +1,17 @@
-# ルーティング
-# /blogs にHTTPメソッドがGETでアクセスしたblogs関数を実行する
 from flask import Blueprint, render_template
-# models.pyのBlogクラスをインポート
-from flaskr.models import Blog
+from flaskr.models import Blog  # Blogモデルをインポート
 
+# Blueprintの作成
 blog_bp = Blueprint("blog", __name__)
 
+# /blogs にアクセスしたらDBから全ブログを取得して表示
 @blog_bp.route("/blogs")
 def blogs():
-    from flask import render_template
     # Blogテーブルから全てのデータを取得し、作成日時の降順で並び替え
-    blogs = Blog.query.order_by(Blog.created_at.desc()).all()
+    blogs_list = Blog.query.order_by(Blog.created_at.desc()).all()
+    return render_template('blogs.html', blogs=blogs_list)
 
-    # テンプレートにblogs変数を渡す
-    return render_template('blogs.html', blogs = blogs)
+# 新規投稿ページ
+@blog_bp.route("/blogs/create")
+def create():
+    return "新規投稿ページです"
