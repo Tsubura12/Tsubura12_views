@@ -1,17 +1,12 @@
-from flask import Blueprint, render_template
-from flaskr.models import Blog  # Blogモデルをインポート
+from flask import Blueprint, render_template, request, redirect, url_for, flash # <= ここを追加
+from flaskr import db
+# models.pyのBlogクラスをインポート
+from flaskr.models import Blog
 
-# Blueprintの作成
-blog_bp = Blueprint("blog", __name__)
+blog_bp = Blueprint('blogs', __name__, url_prefix='/blogs') # <= ここを変更
 
-# /blogs にアクセスしたらDBから全ブログを取得して表示
-@blog_bp.route("/blogs")
-def blogs():
-    # Blogテーブルから全てのデータを取得し、作成日時の降順で並び替え
-    blogs_list = Blog.query.order_by(Blog.created_at.desc()).all()
-    return render_template('blogs.html', blogs=blogs_list)
-
-# 新規投稿ページ
-@blog_bp.route("/blogs/create")
-def create():
-    return "新規投稿ページです"
+# 一覧表示
+@blog_bp.route('/')
+def index():
+    blogs = Blog.query.order_by(Blog.created_at.desc()).all()
+    return render_template('blogs/index.html', blogs=blogs) # <= テンプレートパスを変更を追加
