@@ -17,14 +17,3 @@
   </div>
 </body>
 </html>
-from flask import Blueprint, render_template
-
-bp = Blueprint('blogs', __name__, url_prefix='/blogs')
-
-@bp.route('/')
-def blogs():
-    return render_template('blogs/index.html', blogs=[])
-
-@bp.route('/create')
-def create():
-    return "新規投稿ページです"
